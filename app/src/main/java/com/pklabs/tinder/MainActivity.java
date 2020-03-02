@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
         oppositeSexDb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.exists()){
+                if (dataSnapshot.exists() && !dataSnapshot.child("connections").child("nope").hasChild(currentUId) && !dataSnapshot.child("connections").child("yup").hasChild(currentUId)){
                     //al.add(dataSnapshot.child("name").getValue().toString());
                     cards item = new cards(dataSnapshot.getKey(),dataSnapshot.child("name").getValue().toString());
                     rowItems.add(item);
