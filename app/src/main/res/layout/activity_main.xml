@@ -7,16 +7,28 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-    <Button
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Logout"
-        android:onClick="logoutUser" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Settings"
-        android:onClick="goToSettings" />
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:onClick="logoutUser" />
+        <Button
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:onClick="goToSettings" />
+
+
+    </LinearLayout>
+
+
 
 
     <com.lorentzos.flingswipe.SwipeFlingAdapterView

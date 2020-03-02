@@ -265,6 +265,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToSettings(View view) {
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+        intent.putExtra("userSex",userSex);
         startActivity(intent);
         return;
     }
