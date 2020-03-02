@@ -12,6 +12,11 @@
         android:layout_height="wrap_content"
         android:text="Logout"
         android:onClick="logoutUser" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:onClick="goToSettings" />
 
 
     <com.lorentzos.flingswipe.SwipeFlingAdapterView
