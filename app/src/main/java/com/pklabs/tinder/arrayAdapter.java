@@ -24,6 +24,8 @@ public class arrayAdapter extends ArrayAdapter<cards> {
 
         if (convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item, parent,false);
+           // convertView = LayoutInflater.from(getContext()).inflate(R.layout.item,null);
+
         }
 
         TextView name = (TextView) convertView.findViewById(R.id.name);
