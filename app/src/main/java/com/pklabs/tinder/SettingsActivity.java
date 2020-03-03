@@ -44,7 +44,7 @@ public class SettingsActivity extends AppCompatActivity {
     private ImageView mProfileImage;
 
     private FirebaseAuth mAuth;
-    private DatabaseReference mCustomerDatabsae;
+    private DatabaseReference mCustomerDatabase;
 
     private String userId, name, phone , profileImageUrl;
 
@@ -55,7 +55,9 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        String userSex = getIntent().getExtras().getString("userSex");
+        //String userSex = getIntent().getExtras().getString("userSex");
+        Intent intent = getIntent();
+        String userSex = intent.getExtras().getString("userSex");
 
         mNameField = (EditText)findViewById(R.id.name);
         mPhoneField = (EditText)findViewById(R.id.phone);
@@ -67,7 +69,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         userId = mAuth.getCurrentUser().getUid();
-        mCustomerDatabsae = FirebaseDatabase.getInstance().getReference().child("Users").child(userSex).child(userId);
+        mCustomerDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userSex).child(userId);
 
         getUserInfo();
 
@@ -99,23 +101,27 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void getUserInfo() {
 
-        mCustomerDatabsae.addListenerForSingleValueEvent(new ValueEventListener() {
+        mCustomerDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists() && dataSnapshot.getChildrenCount()>0){
                     Map<String, Object> map = (Map<String, Object>)dataSnapshot.getValue();
+
                     if (map.get("name") != null){
                         name = map.get("name").toString();
                         mNameField.setText(name);
                     }
+
                     if (map.get("phone") != null){
-                        name = map.get("phone").toString();
+                        phone = map.get("phone").toString();
                         mPhoneField.setText(phone);
                     }
+
                     if (map.get("profileImageUrl") != null){
                         profileImageUrl = map.get("profileImageUrl").toString();
                         Glide.with(getApplication()).load(profileImageUrl).into(mProfileImage);
                     }
+
                 }
             }
 
@@ -136,10 +142,11 @@ public class SettingsActivity extends AppCompatActivity {
         Map userInfo = new HashMap();
         userInfo.put("name",name);
         userInfo.put("phone",phone);
-        mCustomerDatabsae.updateChildren(userInfo);
+        mCustomerDatabase.updateChildren(userInfo);
+
         if (resultUri != null){
 
-            StorageReference filepath = FirebaseStorage.getInstance().getReference().child("profileImage").child(userId);
+            final StorageReference filepath = FirebaseStorage.getInstance().getReference().child("profileImage").child(userId);
             Bitmap bitmap = null;
 
             try {
@@ -159,19 +166,51 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
 
+
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Task<Uri> downloadUrl = taskSnapshot.getStorage().getDownloadUrl(); //might give error
+                    filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+
+                            Map userInfo = new HashMap();
+                            userInfo.put("profileImageUrl", uri.toString());
+                            mCustomerDatabase.updateChildren(userInfo);
+
+                            finish();
+                            return;
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            finish();
+                            return;
+                        }
+                    });
+                }
+
+            });
+
+
+
+            /*
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    //*****************part 9 : 29.37**********/ // might give error
+                    //Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    //@SuppressWarnings("VisibleForTests") Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    /*Task<Uri> downloadUrl = taskSnapshot.getStorage().getDownloadUrl(); //might give error
 
                     Map userInfo = new HashMap();
                     userInfo.put("profileImageUrl",downloadUrl.toString());
-                    mCustomerDatabsae.updateChildren(userInfo);
+                    mCustomerDatabase.updateChildren(userInfo);
 
                     finish();
                     return;
                 }
-            });
+            });*/
 
 
         }else{
@@ -183,7 +222,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && requestCode== Activity.RESULT_OK){
+        if (requestCode == 1 && resultCode== Activity.RESULT_OK){
             final Uri imageUri = data.getData();
             resultUri = imageUri;
             mProfileImage.setImageURI(resultUri);

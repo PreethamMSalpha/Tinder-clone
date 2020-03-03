@@ -52,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Toast.makeText(this, userSex, Toast.LENGTH_SHORT).show();
+        //Log.i("userSex", userSex);
+
         usersDb = FirebaseDatabase.getInstance().getReference().child("Users");
 
         mAuth = FirebaseAuth.getInstance();
@@ -173,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
 
         DatabaseReference maleDb = FirebaseDatabase.getInstance().getReference().child("Users").child("Male");
         maleDb.addChildEventListener(new ChildEventListener() {
+
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 if (dataSnapshot.getKey().equals(user.getUid())){
@@ -265,8 +269,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToSettings(View view) {
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+        //Intent intent = new Intent(MainActivity.this, TestActivity.class);
         intent.putExtra("userSex",userSex);
         startActivity(intent);
         return;
     }
+
+
 }
