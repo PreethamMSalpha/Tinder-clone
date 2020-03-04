@@ -88,9 +88,13 @@ public class RegistrationActivity extends AppCompatActivity {
 
                             String userId = mAuth.getCurrentUser().getUid();
                             //DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(radioButton.getText().toString()).child(userId).child("name");
-                            DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(radioButton.getText().toString()).child(userId).child("name");
-
-                            currentUserDb.setValue(name);
+                            DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(radioButton.getText().toString()).child(userId);
+                            //setting up the default profileImage
+                            Map userInfo = new HashMap<>();
+                            userInfo.put("name", name);
+                            userInfo.put("profileImageUrl","default");
+                            currentUserDb.updateChildren(userInfo);
+                            //currentUserDb.setValue(name);
 
 
                         }
