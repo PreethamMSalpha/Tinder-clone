@@ -7,6 +7,15 @@
     tools:context=".RegistrationActivity"
     android:orientation="vertical">
 
+
+    <!--<ImageView
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:id="@+id/profileImage"
+        android:src="@drawable/avatar"
+        android:layout_marginBottom="20sp"
+        android:layout_marginTop="20sp"
+        android:layout_gravity="center"/> -->
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

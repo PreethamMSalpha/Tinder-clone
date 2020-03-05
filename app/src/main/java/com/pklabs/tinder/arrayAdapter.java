@@ -26,15 +26,19 @@ public class arrayAdapter extends ArrayAdapter<cards> {
 
         if (convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item, parent,false);
-           // convertView = LayoutInflater.from(getContext()).inflate(R.layout.item,null);
-
         }
 
         TextView name = (TextView) convertView.findViewById(R.id.name);
         ImageView image = (ImageView) convertView.findViewById(R.id.image);
 
         name.setText(card_item.getName());
-        Glide.with(getContext()).load(card_item.getProfileImageUrl()).into(image);
+
+       switch (card_item.getProfileImageUrl()){
+            case "default": Glide.with(convertView.getContext()).load(R.mipmap.ic_launcher).into(image); break;
+            default: Glide.clear(image);
+                     Glide.with(convertView.getContext()).load(card_item.getProfileImageUrl()).into(image); break;
+        }
+
 
         return convertView;
 

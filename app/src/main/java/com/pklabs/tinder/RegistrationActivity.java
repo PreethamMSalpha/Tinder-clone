@@ -1,29 +1,45 @@
 package com.pklabs.tinder;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class RegistrationActivity extends AppCompatActivity {
+
+    private ImageView mProfileImage;
+    private Uri resultUri;
 
     private Button mRegister;
     private EditText mEmail,mPassword,mName;
@@ -33,12 +49,16 @@ public class RegistrationActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
         mAuth = FirebaseAuth.getInstance();
+
+
         firebaseAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -62,9 +82,12 @@ public class RegistrationActivity extends AppCompatActivity {
         mRadioGroup = (RadioGroup) findViewById(R.id.radioGroup);
 
 
+
         mRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
 
                 int selected = mRadioGroup.getCheckedRadioButtonId();
                 final RadioButton radioButton = (RadioButton)findViewById(selected);
@@ -87,15 +110,12 @@ public class RegistrationActivity extends AppCompatActivity {
                         }else{
 
                             String userId = mAuth.getCurrentUser().getUid();
-                            //DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(radioButton.getText().toString()).child(userId).child("name");
                             DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(radioButton.getText().toString()).child(userId);
-                            //setting up the default profileImage
+                             //setting up the default profileImage
                             Map userInfo = new HashMap<>();
                             userInfo.put("name", name);
-                            userInfo.put("profileImageUrl","default");
+                            userInfo.put("profileImageUrl", "default" );
                             currentUserDb.updateChildren(userInfo);
-                            //currentUserDb.setValue(name);
-
 
                         }
 
@@ -106,6 +126,8 @@ public class RegistrationActivity extends AppCompatActivity {
         });
 
     }
+
+
 
     @Override
     protected void onStart() {
@@ -118,4 +140,7 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onStop();
         mAuth.removeAuthStateListener(firebaseAuthStateListener);
     }
+
+
+
 }
