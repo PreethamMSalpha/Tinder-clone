@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 public class MatchesAdapter extends RecyclerView.Adapter<MatchesViewHolders> {
@@ -34,6 +36,10 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesViewHolders> {
     @Override
     public void onBindViewHolder(@NonNull MatchesViewHolders holder, int position) {
             holder.mMatchId.setText(matchesObjectList.get(position).getUserId());
+            holder.mMatchName.setText(matchesObjectList.get(position).getName());
+            if (!matchesObjectList.get(position).getProfileImageUrl().equals("default")) {
+                Glide.with(context).load(matchesObjectList.get(position).getProfileImageUrl()).into(holder.mMatchImage);
+            }
     }
 
     @Override
