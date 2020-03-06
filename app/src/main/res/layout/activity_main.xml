@@ -8,16 +8,23 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
-            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Logout"
-            android:onClick="logoutUser" />
+            android:layout_weight="1"
+            android:onClick="logoutUser"
+            android:text="Logout" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="goToMatches"
+            android:text="Matches" />
 
         <Button
             android:layout_width="wrap_content"

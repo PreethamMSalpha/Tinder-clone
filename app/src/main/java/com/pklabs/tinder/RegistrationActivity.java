@@ -110,10 +110,11 @@ public class RegistrationActivity extends AppCompatActivity {
                         }else{
 
                             String userId = mAuth.getCurrentUser().getUid();
-                            DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(radioButton.getText().toString()).child(userId);
+                            DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
                              //setting up the default profileImage
                             Map userInfo = new HashMap<>();
                             userInfo.put("name", name);
+                            userInfo.put("sex", radioButton.getText().toString());
                             userInfo.put("profileImageUrl", "default" );
                             currentUserDb.updateChildren(userInfo);
 
