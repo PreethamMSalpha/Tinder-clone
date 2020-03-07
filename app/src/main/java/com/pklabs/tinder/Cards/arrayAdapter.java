@@ -1,4 +1,4 @@
-package com.pklabs.tinder;
+package com.pklabs.tinder.Cards;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.pklabs.tinder.R;
 
 import java.util.List;
 

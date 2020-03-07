@@ -1,4 +1,4 @@
-package com.pklabs.tinder;
+package com.pklabs.tinder.Cards;
 
 public class cards {
 

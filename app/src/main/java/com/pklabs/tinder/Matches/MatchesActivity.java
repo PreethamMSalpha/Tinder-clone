@@ -1,4 +1,4 @@
-package com.pklabs.tinder;
+package com.pklabs.tinder.Matches;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.pklabs.tinder.R;
 
 import java.util.ArrayList;
 import java.util.List;
