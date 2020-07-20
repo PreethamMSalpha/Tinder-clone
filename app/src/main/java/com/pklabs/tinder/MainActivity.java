@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setTitle("ProtoType 1.1");
+
         //Toast.makeText(this, userSex, Toast.LENGTH_SHORT).show();
         //Log.i("userSex", userSex);
 

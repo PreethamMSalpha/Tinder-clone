@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Chats.ChatActivity"></activity>
+        <activity android:name=".MessagesChatActivity"></activity>
+        <activity android:name=".Chats.ChatActivity" />
         <activity android:name=".Matches.MatchesActivity" />
         <activity android:name=".TestActivity" />
         <activity android:name=".SettingsActivity" />

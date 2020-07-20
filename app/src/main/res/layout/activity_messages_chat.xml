@@ -42,7 +42,7 @@
             android:id="@+id/send"
             android:text="send"/>
     </LinearLayout>
-    
+
 
 
 

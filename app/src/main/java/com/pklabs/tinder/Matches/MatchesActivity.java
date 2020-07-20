@@ -30,6 +30,7 @@ public class MatchesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches);
+        setTitle("Prototype 1.1");
 
         currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
